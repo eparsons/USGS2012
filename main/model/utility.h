@@ -7,14 +7,14 @@ namespace Utility {
      * @param value The value to adjust
      * @param lowerBound The lower bound
      */
-    void boundLower(double & value, double lowerBound);
+    void boundLower(float & value, float lowerBound);
 
     /**
      * @brief Adjusts the value so that it is no higher than the upper bound
      * @param value The value to adjust
      * @param upperBound The upper bound
      */
-    void boundUpper(double & value, double upperBound);
+    void boundUpper(float & value, float upperBound);
 
     /**
      * @brief Adjust the value so that it is between the lower and upper bounds.
@@ -22,13 +22,13 @@ namespace Utility {
      * @param lowerBound The lower bound
      * @param upperBound The upper bound
      */
-    void boundValue(double & value, double lowerBound, double upperBound);
+    void boundValue(float & value, float lowerBound, float upperBound);
 
     /**
      * @brief Adjusts the value so that it is between 0.0 and 1.0
      * @param value The percentage to adjust
      */
-    void boundPercentage(double & value);
+    void boundPercentage(float & value);
 
     /**
      * @brief Initializes an array to the provided size and default values

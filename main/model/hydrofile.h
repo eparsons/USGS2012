@@ -39,7 +39,7 @@ class HydroFile {
          * @param[in] x The x coordinate
          * @param[in] y The y coordinate
          */
-        double getDepth(int x, int y);
+        float getDepth(int x, int y);
 
         /**
          * @brief Returns the 2D flow vector for the cell at the given (x,y) coordinate
@@ -54,7 +54,7 @@ class HydroFile {
          * @param[in] y The y coordinate
          * @return The velocity as recorded in hydrofile
          */
-        double getFileVelocity(int x, int y);
+        float getFileVelocity(int x, int y);
 
         /**
          * @brief Returns the map's width
@@ -79,8 +79,8 @@ class HydroFile {
             QVector2D flowVector;
             // Keeping track of this as we don't know why file's velocity
             // doesn't match what is calculated using component vectors
-            double fileVelocity;
-            double depth;
+            float fileVelocity;
+            float depth;
         };
 
         bool hydroFileLoaded;

@@ -52,10 +52,10 @@ void HydroFile::loadFromFile(QString filename) {
         int patch_x = hydroFileData[index].toInt();
         int patch_y = hydroFileData[index + 1].toInt();
 
-        data.depth          = hydroFileData[index + 2].toDouble();
-        data.flowVector.setX( hydroFileData[index + 3].toDouble() );
-        data.flowVector.setY( hydroFileData[index + 4].toDouble() );
-        data.fileVelocity   = hydroFileData[index + 5].toDouble();
+        data.depth          = hydroFileData[index + 2].toFloat();
+        data.flowVector.setX( hydroFileData[index + 3].toFloat() );
+        data.flowVector.setY( hydroFileData[index + 4].toFloat() );
+        data.fileVelocity   = hydroFileData[index + 5].toFloat();
 
         hydroData(patch_x, patch_y) = data;
 
@@ -99,11 +99,11 @@ const QVector2D & HydroFile::getVector(int x, int y) {
     return getData(x,y).flowVector;
 }
 
-double HydroFile::getDepth(int x, int y) {
+float HydroFile::getDepth(int x, int y) {
     return getData(x,y).depth;
 }
 
-double HydroFile::getFileVelocity(int x, int y) {
+float HydroFile::getFileVelocity(int x, int y) {
     return getData(x,y).fileVelocity;
 }
 
@@ -172,8 +172,8 @@ QImage HydroFile::generateVisualization(int imageCellSize){
     for(int x = 0; x < width; x++) {
         for(int y = 0; y < height; y++) {
             if(patchExists(x,y) && getDepth(x,y) > 0) {
-                double cellDepth = getDepth(x,y);
-                double relativeDepth = cellDepth / maxDepth;
+                float cellDepth = getDepth(x,y);
+                float relativeDepth = cellDepth / maxDepth;
                 int scaledValue = (int)(120*relativeDepth);
                 if(scaledValue > 120){
                     scaledValue = 120;
@@ -196,15 +196,15 @@ QImage HydroFile::generateVisualization(int imageCellSize){
     for(int x = 0; x < width; x++) {
         for(int y = 0; y < height; y++) {
             if(patchExists(x,y) && getDepth(x,y) > 0) {
-                double cellI = x*imageCellSize;
-                double cellJ = y*imageCellSize;
+                float cellI = x*imageCellSize;
+                float cellJ = y*imageCellSize;
 
-                double startLineI = (cellI);
-                double startLineJ = (cellJ);
-                double endLineI   = (startLineI + imageCellSize);
-                double endLineJ   = (startLineJ + imageCellSize);
+                float startLineI = (cellI);
+                float startLineJ = (cellJ);
+                float endLineI   = (startLineI + imageCellSize);
+                float endLineJ   = (startLineJ + imageCellSize);
 
-                for(double t = 0.0; t < 1.0; t += 1.0/30.0) {
+                for(float t = 0.0; t < 1.0; t += 1.0/30.0) {
                     int i = (1.0 - t)*startLineI + t*endLineI;
                     int j = (1.0 - t)*startLineJ + t*endLineJ;
 
@@ -223,17 +223,17 @@ QImage HydroFile::generateVisualization(int imageCellSize){
         for(int y = 0; y < height; y++) {
             if(patchExists(x,y) && getDepth(x,y) > 0) {
                 QVector2D cellFlowVector = getVector(x,y);
-                double dx = cellFlowVector.x()* (imageCellSize / 30.0)*60;
-                double dy = cellFlowVector.y()* (imageCellSize / 30.0)*60;
-                double cellI = x*imageCellSize;
-                double cellJ = y*imageCellSize;
+                float dx = cellFlowVector.x()* (imageCellSize / 30.0)*60;
+                float dy = cellFlowVector.y()* (imageCellSize / 30.0)*60;
+                float cellI = x*imageCellSize;
+                float cellJ = y*imageCellSize;
 
-                double startLineI = (cellI + imageCellSize/2.0);
-                double startLineJ = (cellJ + imageCellSize/2.0);
-                double endLineI   = (startLineI + dx);
-                double endLineJ   = (startLineJ + dy);
+                float startLineI = (cellI + imageCellSize/2.0);
+                float startLineJ = (cellJ + imageCellSize/2.0);
+                float endLineI   = (startLineI + dx);
+                float endLineJ   = (startLineJ + dy);
 
-                for(double t = 0.0; t < 1.0; t += 1.0/100.0) {
+                for(float t = 0.0; t < 1.0; t += 1.0/100.0) {
                     int i = (1.0 - t)*startLineI + t*endLineI;
                     int j = (1.0 - t)*startLineJ + t*endLineJ;
 

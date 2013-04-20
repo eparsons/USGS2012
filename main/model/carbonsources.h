@@ -9,11 +9,11 @@
 
 struct CarbonSource {
     CarbonSource() {}
-    CarbonSource(int newX,int newY, double newAmount)
+    CarbonSource(int newX,int newY, float newAmount)
         : x(newX), y(newY), amount(newAmount) {}
     int x;
     int y;
-    double amount;
+    float amount;
 };
 
 class CarbonSourceCollection {
@@ -21,17 +21,17 @@ class CarbonSourceCollection {
         CarbonSourceCollection();
         CarbonSourceCollection(int newX, int newY);
 
-        void addSource(int x, int y, double ammount);
+        void addSource(int x, int y, float ammount);
         void addSource(const CarbonSource & source);
         void addSources(const QVector<CarbonSource> & sources);
         void addSources(const CarbonSourceCollection & collection);
 
-        void trim(double percent);
+        void trim(float percent);
 
-        void removeSourcesPercent(double percent);
+        void removeSourcesPercent(float percent);
 
         const QVector<CarbonSource> * getSources() const;
-        const QVector<CarbonSource> getSourcesPercentage(double percent) const;
+        const QVector<CarbonSource> getSourcesPercentage(float percent) const;
 
     private:
         int x;

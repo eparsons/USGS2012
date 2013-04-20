@@ -51,7 +51,7 @@ class River {
          * @brief Sets the current water temp to use in future calculations
          * @param newTemp New temp to use.
          */
-        void setCurrentWaterTemperature(double newTemp);
+        void setCurrentWaterTemperature(float newTemp);
 
         /**
          * @brief Sets the current PAR to use in future calculations
@@ -115,14 +115,14 @@ class River {
          * @param maxValue The max of the value across the map
          * @return A QColor object containing the color to draw in an image
          */
-        QColor getHeatMapColor(double value, double avgValue, double maxValue);
+        QColor getHeatMapColor(float value, float avgValue, float maxValue);
 
 
         PatchCollection p;
         Configuration config;
 
         HydroData * currHydroData;
-        double currWaterTemp;
+        float currWaterTemp;
         int currPAR;
 
         int width;

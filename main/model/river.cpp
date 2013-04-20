@@ -24,13 +24,13 @@ void River::setCurrentHydroData(HydroData *newHydroData) {
         int y = p.pycor[i];
 
         if(newHydroFile->patchExists(x,y)){
-            double depth = newHydroFile->getDepth(x,y);
+            float depth = newHydroFile->getDepth(x,y);
             QVector2D flowVector = newHydroFile->getVector(x,y);
-            double flowX = flowVector.x();
-            double flowY = flowVector.y();
+            float flowX = flowVector.x();
+            float flowY = flowVector.y();
 
             //TODO Replace this line with flowVector.length() once we know if it is correct to do so.
-            double flowMagnitude = newHydroFile->getFileVelocity(x,y);
+            float flowMagnitude = newHydroFile->getFileVelocity(x,y);
 
             p.hasWater[i] = true;
             p.depth[i] = depth;
@@ -48,7 +48,7 @@ void River::setCurrentHydroData(HydroData *newHydroData) {
 
         // update miscellanous variables inside the patch
 
-        double current_depth = 0.0;
+        float current_depth = 0.0;
         if(currHydroFile != NULL && currHydroFile->patchExists(x,y)){
             current_depth = currHydroFile->getDepth(x,y);
         }
@@ -79,7 +79,7 @@ void River::setCurrentHydroData(HydroData *newHydroData) {
     currHydroData = newHydroData;
 }
 
-void River::setCurrentWaterTemperature(double newTemp) {
+void River::setCurrentWaterTemperature(float newTemp) {
     /*
      * TODO I don't know what this calculation is doing...
      * Is it really the "temperature" anymore after this?
@@ -174,10 +174,10 @@ void River::flowSingleTimestep(Grid<FlowData> &source, Grid<FlowData> &dest, Con
         int x = p.pxcor[i];
         int y = p.pycor[i];
 
-        double DOC = 0.0;
-        double POC = 0.0;
-        double waterdecomp = 0.0;
-        double phyto = 0.0;
+        float DOC = 0.0;
+        float POC = 0.0;
+        float waterdecomp = 0.0;
+        float phyto = 0.0;
 
 
         int currOffset = (*sourceData.offsets)(x,y);
@@ -185,7 +185,7 @@ void River::flowSingleTimestep(Grid<FlowData> &source, Grid<FlowData> &dest, Con
         for(int sourceIndex = 0; sourceIndex < numSources; sourceIndex++) {
             int sourceX = sourceData.x[currOffset + sourceIndex];
             int sourceY = sourceData.y[currOffset + sourceIndex];
-            double sourceAmount = sourceData.amount[currOffset + sourceIndex];
+            float sourceAmount = sourceData.amount[currOffset + sourceIndex];
 
             DOC += source(sourceX,sourceY).DOC * sourceAmount;
             POC += source(sourceX,sourceY).POC * sourceAmount;
@@ -216,7 +216,7 @@ Statistics River::generateStatistics() {
 
         stats.waterPatches++;
 
-        double carbon = 0.0;
+        float carbon = 0.0;
 
         //Macro
         carbon += p.macro[i];
@@ -313,11 +313,11 @@ void River::saveCSV(QString displayedStock, int daysElapsed) const {
     fprintf(f,"%s\n","# pxcor,pycor,pcolor,px_vector,py_vector,depth,velocity,assimilation,detritus,DOC,POC,waterdecomp,seddecomp,macro,phyto,herbivore,sedconsumer,peri,consumer");
 
     int pxcor, pycor, pcolor;
-    double px_vector, py_vector;
-    double depth;
-    double velocity;
-    double assimilation;
-    double detritus, DOC, POC, waterdecomp, seddecomp, macro, phyto, herbivore, sedconsumer, peri, consumer;
+    float px_vector, py_vector;
+    float depth;
+    float velocity;
+    float assimilation;
+    float detritus, DOC, POC, waterdecomp, seddecomp, macro, phyto, herbivore, sedconsumer, peri, consumer;
 
     for(int i = 0; i < p.getSize(); i++) {
         //Skip if cell doesn't exist or is land
@@ -475,7 +475,7 @@ void River::generateImages(QVector<QImage> &images, QVector<QString> & stockName
  * @param value The value of the patch
  * @param maxVal the max value for a patch
  */
-QColor River::getHeatMapColor(double carbonValue, double avgVal, double maxVal) {
+QColor River::getHeatMapColor(float carbonValue, float avgVal, float maxVal) {
     if( carbonValue <= 0.0 || maxVal <= 0.0 ) {
         return QColor("green");
     }
@@ -488,13 +488,13 @@ QColor River::getHeatMapColor(double carbonValue, double avgVal, double maxVal) 
         return QColor("red");
     }
 
-    double distFromAverage = fabs(carbonValue - avgVal);
+    float distFromAverage = fabs(carbonValue - avgVal);
 
     if( carbonValue < avgVal) {
-        double relativeValue = distFromAverage / avgVal;
+        float relativeValue = distFromAverage / avgVal;
         return QColor::fromHsv( 60 + (int)(60*relativeValue),255,255);
     } else {
-        double relativeValue = distFromAverage / (maxVal - avgVal);
+        float relativeValue = distFromAverage / (maxVal - avgVal);
         return QColor::fromHsv( 60 - (int)(60*relativeValue),255,255);
     }
 }

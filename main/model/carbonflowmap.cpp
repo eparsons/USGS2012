@@ -50,7 +50,7 @@ CarbonFlowMap::CarbonFlowMap(HydroFile * newHydroFile, int numIterations) {
     sourceData.offsets = new Grid<int>(hydroFile->getMapWidth(), hydroFile->getMapHeight());
     sourceData.x = new int[totalSources];
     sourceData.y = new int[totalSources];
-    sourceData.amount = new double[totalSources];
+    sourceData.amount = new float[totalSources];
 
 
 
@@ -101,7 +101,7 @@ void CarbonFlowMap::pushCarbon(
         for( int y = 0; y < hydroFile->getMapHeight(); y++) {
             if(hydroFile->patchExists(x,y)) {
                 QVector<CarbonSource> * targets = getFlowTargets(x,y);
-                double carbonPushedToOtherWaterPatches = 0.0;
+                float carbonPushedToOtherWaterPatches = 0.0;
 
                 for(int i = 0; i < targets->size(); i++){
                     CarbonSource carbonTarget = (*targets)[i];
@@ -109,7 +109,7 @@ void CarbonFlowMap::pushCarbon(
                     QVector<CarbonSource> carbonPushed = source(x,y).getSourcesPercentage(carbonTarget.amount);
                     dest(carbonTarget.x, carbonTarget.y).addSources(carbonPushed);
                 }
-                double percentStationaryCarbon = 1.0 - carbonPushedToOtherWaterPatches;
+                float percentStationaryCarbon = 1.0 - carbonPushedToOtherWaterPatches;
                 dest(x,y).addSources( source(x,y).getSourcesPercentage(percentStationaryCarbon) );
                 //TODO: Avoid new and deleting over and over...
                 delete targets;
@@ -127,8 +127,8 @@ QVector<CarbonSource> * CarbonFlowMap::getFlowTargets(int i, int j){
 
     //One cell can flow into at most four others
     //Percents are calculated by target's area over area of a cell
-    double newX = x + flowVector.x() * 60;
-    double newY = y + flowVector.y() * 60;
+    float newX = x + flowVector.x() * 60;
+    float newY = y + flowVector.y() * 60;
 
     /**
      * Note: HydroFiles have 0,0 in the bottom left
@@ -145,64 +145,64 @@ QVector<CarbonSource> * CarbonFlowMap::getFlowTargets(int i, int j){
      *
      */
     //Target Coordinates (unused commented out)
-    int iA = floor(newX/((double)PATCH_LENGTH));
-    int jA = floor(newY/((double)PATCH_LENGTH));
-    //double xA = iA * PATCH_LENGTH;
-    //double yA = jA * PATCH_LENGTH;
+    int iA = floor(newX/((float)PATCH_LENGTH));
+    int jA = floor(newY/((float)PATCH_LENGTH));
+    //float xA = iA * PATCH_LENGTH;
+    //float yA = jA * PATCH_LENGTH;
 
     int iB = iA + 1;
     int jB = jA;
-    double xB = iB * PATCH_LENGTH;
-    //double yB = jB * PATCH_LENGTH;
+    float xB = iB * PATCH_LENGTH;
+    //float yB = jB * PATCH_LENGTH;
 
     int iC = iA;
     int jC = jA + 1;
-    //double xC = iC * PATCH_LENGTH;
-    double yC = jC * PATCH_LENGTH;
+    //float xC = iC * PATCH_LENGTH;
+    float yC = jC * PATCH_LENGTH;
 
     int iD = iA + 1;
     int jD = jA + 1;
-    double xD = iD * PATCH_LENGTH;
-    double yD = jD * PATCH_LENGTH;
+    float xD = iD * PATCH_LENGTH;
+    float yD = jD * PATCH_LENGTH;
 
     //We need to find what percentage of water flowed to A,B,C and D
 
     //Target A
     if(hydroFile->patchExists(iA, jA)) {
-        double targetWidthA = xB - newX;
-        double targetHeightA = yC - newY;
-        double targetAreaA = targetWidthA*targetHeightA;
-        double percentA = targetAreaA/PATCH_AREA;
+        float targetWidthA = xB - newX;
+        float targetHeightA = yC - newY;
+        float targetAreaA = targetWidthA*targetHeightA;
+        float percentA = targetAreaA/PATCH_AREA;
         CarbonSource targetA(iA, jA, percentA);
         targets->append(targetA);
     }
 
     //Target B
     if(hydroFile->patchExists(iB, jB)) {
-        double targetWidthB = (newX+PATCH_LENGTH) - xB;
-        double targetHeightB = yD - newY;
-        double targetAreaB = targetWidthB*targetHeightB;
-        double percentB = targetAreaB/PATCH_AREA;
+        float targetWidthB = (newX+PATCH_LENGTH) - xB;
+        float targetHeightB = yD - newY;
+        float targetAreaB = targetWidthB*targetHeightB;
+        float percentB = targetAreaB/PATCH_AREA;
         CarbonSource targetB(iB, jB, percentB);
         targets->append(targetB);
     }
 
     //Target C
     if(hydroFile->patchExists(iC, jC)) {
-        double targetWidthC = xD-newX;
-        double targetHeightC = (newY+PATCH_LENGTH) - yC;
-        double targetAreaC = targetWidthC*targetHeightC;
-        double percentC = targetAreaC/PATCH_AREA;
+        float targetWidthC = xD-newX;
+        float targetHeightC = (newY+PATCH_LENGTH) - yC;
+        float targetAreaC = targetWidthC*targetHeightC;
+        float percentC = targetAreaC/PATCH_AREA;
         CarbonSource targetC(iC, jC, percentC);
         targets->append(targetC);
     }
 
     //Target D
     if(hydroFile->patchExists(iD, jD)) {
-        double targetWidthD = (newX+PATCH_LENGTH) - xD;
-        double targetHeightD = (newY+PATCH_LENGTH) - yD;
-        double targetAreaD = targetWidthD*targetHeightD;
-        double percentD = targetAreaD/PATCH_AREA;
+        float targetWidthD = (newX+PATCH_LENGTH) - xD;
+        float targetHeightD = (newY+PATCH_LENGTH) - yD;
+        float targetAreaD = targetWidthD*targetHeightD;
+        float percentD = targetAreaD/PATCH_AREA;
         CarbonSource targetD(iD, jD, percentD);
         targets->append(targetD);
     }

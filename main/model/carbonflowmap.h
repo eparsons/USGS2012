@@ -15,7 +15,7 @@ struct SourceArrays {
     Grid<int> * sizes;
     int * x;
     int * y;
-    double * amount;
+    float * amount;
 };
 
 

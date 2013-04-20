@@ -52,7 +52,7 @@ void PatchComputation::macro(PatchCollection & p, const Configuration & config, 
 
         //TODO Ask Kevin what theta is and why it is 1.072.  I want to add
         //it to the constants file but "THETA" is really ambiguous. -ECP
-        double Q10 = pow(THETA, (currWaterTemp - config.macroTemp));
+        float Q10 = pow(THETA, (currWaterTemp - config.macroTemp));
 
         //TODO pull velocity from hydrofile rather than patches
         if(p.flowMagnitude[i] < config.macroVelocityMax) {
@@ -64,7 +64,7 @@ void PatchComputation::macro(PatchCollection & p, const Configuration & config, 
             p.K[i] = 0.01;
         }
         //Same at bottom-light
-        double macro_light = currPAR * exp( (-1*p.depth[i]) * p.turbidity[i] );
+        float macro_light = currPAR * exp( (-1*p.depth[i]) * p.turbidity[i] );
 
         p.gross_photo_macro[i] = config.macroGross * p.macro[i]
                 * ( macro_light / ( macro_light + 10.0)) * Q10
@@ -103,22 +103,22 @@ void PatchComputation::phyto(PatchCollection & p, const Configuration & config, 
 
         //base temperature for nominal growth
         //TODO What is base temperature and why is it a magic number?
-        double base_temperature = 8.0;
-        double Q10 = pow(THETA, (currWaterTemp - base_temperature));
-        double km = 10; //half saturation constant
+        float base_temperature = 8.0;
+        float Q10 = pow(THETA, (currWaterTemp - base_temperature));
+        float km = 10; //half saturation constant
 
 
         // TODO  Figure out if the following commented light_k lines were lost in translation from netgui
         // It is set but never used. -ECP
         //this is the attenuation coefficient of phytoplank m^2/g of phyto plankton
-        //double light_k = 0.4;
+        //float light_k = 0.4;
 
 
         p.respiration_phyto[i] = (config.phytoRespiration / HOURS_PER_DAY) * p.phyto[i] * Q10;
 
-        double pre_ln = 0.01 + currPAR
+        float pre_ln = 0.01 + currPAR
                 * exp(-1 * p.phyto[i] * config.kPhyto * p.depth[i]);
-        double be = km + currPAR
+        float be = km + currPAR
                 * exp(-1 * p.phyto[i] * config.kPhyto * p.depth[i]);
 
         //photosynthesis from phytoplankton derived from Huisman Weissing 1994
@@ -238,8 +238,8 @@ void PatchComputation::sedDecomp(PatchCollection & p, const Configuration & conf
                 / (config.seddecompAiDetritus - config.seddecompGiDetritus);
         Utility::boundPercentage(p.seddecomp_detritus_prey_limitation[i]);
 
-        double seddecompAj = p.detritus[i] / 20.0;
-        double seddecompGj = p.detritus[i] / 5.0;
+        float seddecompAj = p.detritus[i] / 20.0;
+        float seddecompGj = p.detritus[i] / 5.0;
 
         //TODO Comparing floats like this is wrong and is likely a bug -ECP
         //TODO Also, why is this calculation different from the others? -ECP

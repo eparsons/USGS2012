@@ -139,7 +139,7 @@ class RiverModel {
         Status modelStatus;
         Configuration modelConfig;
         HydroFileDict hydroFileDict;
-        QVector<double> waterTemps;
+        QVector<float> waterTemps;
         QVector<int> parValues;
 
         QString displayedStock;

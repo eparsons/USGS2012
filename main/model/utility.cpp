@@ -1,18 +1,18 @@
 #include "utility.h"
 
-void Utility::boundLower(double & value, double lowerBound) {
+void Utility::boundLower(float & value, float lowerBound) {
     if(value < lowerBound) {
         value = lowerBound;
     }
 }
 
-void Utility::boundUpper(double & value, double upperBound) {
+void Utility::boundUpper(float & value, float upperBound) {
     if (value > upperBound) {
         value = upperBound;
     }
 }
 
-void Utility::boundValue(double & value, double lowerBound, double upperBound) {
+void Utility::boundValue(float & value, float lowerBound, float upperBound) {
     if(value < lowerBound) {
         value = lowerBound;
     } else if (value > upperBound) {
@@ -20,6 +20,6 @@ void Utility::boundValue(double & value, double lowerBound, double upperBound) {
     }
 }
 
-void Utility::boundPercentage(double & value) {
+void Utility::boundPercentage(float & value) {
     boundValue(value, 0.0, 1.0);
 }

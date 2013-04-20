@@ -202,7 +202,7 @@ void RiverModel::initializeWaterTemps(const Configuration &config) {
     QTextStream temperatureInput( &temperatureFile );
     while( !temperatureInput.atEnd() ){
         QString line = temperatureInput.readLine();
-        waterTemps.append(line.toDouble() );
+        waterTemps.append(line.toFloat() );
     }
     temperatureFile.close();
 }

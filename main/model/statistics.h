@@ -6,43 +6,43 @@
  */
 struct Statistics {
     //Totals over entire map
-    double totalMacro;
-    double totalPhyto;
-    double totalHerbivore;
-    double totalWaterDecomp;
-    double totalSedDecomp;
-    double totalSedConsumer;
-    double totalConsum;
-    double totalDOC;
-    double totalPOC;
-    double totalDetritus;
-    double totalCarbon;
+    float totalMacro;
+    float totalPhyto;
+    float totalHerbivore;
+    float totalWaterDecomp;
+    float totalSedDecomp;
+    float totalSedConsumer;
+    float totalConsum;
+    float totalDOC;
+    float totalPOC;
+    float totalDetritus;
+    float totalCarbon;
 
     //Averages over entire map
-    double avgMacro;
-    double avgPhyto;
-    double avgHerbivore;
-    double avgWaterDecomp;
-    double avgSedDecomp;
-    double avgSedConsumer;
-    double avgConsum;
-    double avgDOC;
-    double avgPOC;
-    double avgDetritus;
-    double avgCarbon;
+    float avgMacro;
+    float avgPhyto;
+    float avgHerbivore;
+    float avgWaterDecomp;
+    float avgSedDecomp;
+    float avgSedConsumer;
+    float avgConsum;
+    float avgDOC;
+    float avgPOC;
+    float avgDetritus;
+    float avgCarbon;
 
     //Max of all patches
-    double maxMacro;
-    double maxPhyto;
-    double maxHerbivore;
-    double maxWaterDecomp;
-    double maxSedDecomp;
-    double maxSedConsumer;
-    double maxConsum;
-    double maxDOC;
-    double maxPOC;
-    double maxDetritus;
-    double maxCarbon;
+    float maxMacro;
+    float maxPhyto;
+    float maxHerbivore;
+    float maxWaterDecomp;
+    float maxSedDecomp;
+    float maxSedConsumer;
+    float maxConsum;
+    float maxDOC;
+    float maxPOC;
+    float maxDetritus;
+    float maxCarbon;
 
     int waterPatches;
 
